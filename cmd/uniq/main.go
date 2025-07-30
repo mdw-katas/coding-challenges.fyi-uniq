@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
+	"io"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -19,5 +22,23 @@ func main() {
 	}
 	_ = flags.Parse(os.Args[1:])
 
-	fmt.Println("Hello, world!")
+	uniq(os.Stdin, os.Stdout)
+}
+
+func uniq(input io.Reader, output io.Writer) {
+	var previous string
+	for reader := bufio.NewReader(input); ; {
+		line, err := reader.ReadString('\n')
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		if line == previous {
+			continue
+		}
+		_, _ = fmt.Fprint(output, line)
+		previous = line
+	}
 }
