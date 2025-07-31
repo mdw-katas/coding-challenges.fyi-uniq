@@ -1,4 +1,4 @@
-package go_cli_template
+package uniq
 
 import (
 	// Remove entries as they are deemed unnecessary:
