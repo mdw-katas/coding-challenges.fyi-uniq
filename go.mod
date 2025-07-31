@@ -1,6 +1,6 @@
 module github.com/mdw-katas/coding-challenges.fyi-uniq
 
-go 1.23
+go 1.24
 
 require (
 	github.com/mdw-go/exec v1.4.0
