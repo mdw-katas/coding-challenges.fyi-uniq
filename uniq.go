@@ -22,7 +22,7 @@ type Configuration struct {
 	Target io.Writer
 }
 
-func Uniq(config Configuration) error {
+func Process(config Configuration) error {
 	var previousLine bytes.Buffer
 	reader := bufio.NewReader(config.Source)
 	for {

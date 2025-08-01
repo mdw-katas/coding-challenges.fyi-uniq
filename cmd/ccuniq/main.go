@@ -14,7 +14,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = uniq.Uniq(config)
+	err = uniq.Process(config)
 	if err != nil {
 		log.Fatal(err)
 	}
