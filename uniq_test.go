@@ -2,7 +2,9 @@ package uniq
 
 import (
 	"bytes"
+	"errors"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -31,6 +33,30 @@ func uniq(t *testing.T, path string, args ...string) (result []string) {
 	}
 	return strings.Split(output.String(), "\n")
 }
+func TestUniqReadError(t *testing.T) {
+	boink := errors.New("boink")
+	config, err := ParseCLI(t.Name(), &ErringReader{err: boink}, ioutil.Discard, t.Name())
+	should.So(t, err, should.BeNil)
+	err = Uniq(config)
+	should.So(t, err, should.WrapError, boink)
+}
+
+type ErringReader struct{ err error }
+
+func (e *ErringReader) Read(p []byte) (n int, err error) { return 0, e.err }
+
+func TestUniqWriteError(t *testing.T) {
+	boink := errors.New("boink")
+	config, err := ParseCLI(t.Name(), strings.NewReader("hello"), &ErringWriter{err: boink}, t.Name())
+	should.So(t, err, should.BeNil)
+	err = Uniq(config)
+	should.So(t, err, should.WrapError, boink)
+}
+
+type ErringWriter struct{ err error }
+
+func (e *ErringWriter) Write(p []byte) (n int, err error) { return 0, e.err }
+
 func TestUniqDefaults(t *testing.T) {
 	should.So(t, uniq(t, "12345-input.txt"), should.Equal, []string{
 		"1",
