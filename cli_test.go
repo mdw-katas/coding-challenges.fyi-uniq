@@ -27,8 +27,7 @@ func (this *ParseCLISuite) TestDefaults() {
 	config, err := ParseCLI("version", os.Stdin, os.Stdout, this.args...)
 	this.So(err, should.BeNil)
 	this.So(config, should.Equal, Configuration{
-		EmitUnique: true,
-		Source:     os.Stdin,
-		Target:     os.Stdout,
+		Source: os.Stdin,
+		Target: os.Stdout,
 	})
 }

@@ -16,8 +16,6 @@ func ParseCLI(version string, stdin io.Reader, stdout io.Writer, args ...string)
 		flags.PrintDefaults()
 	}
 
-	result.EmitUnique = true
-
 	err = flags.Parse(args[1:])
 	if err != nil {
 		return result, err
