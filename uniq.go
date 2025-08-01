@@ -8,15 +8,15 @@ import (
 )
 
 type Configuration struct {
-	EmitCounts      bool
-	EmitUnique      bool // ignored if either EmitRepeated or EmitAllRepeated is set
-	EmitRepeated    bool // ignored if EmitAllRepeated is set
-	EmitAllRepeated bool
+	// EmitCounts      bool
+	// EmitUnique      bool // ignored if either EmitRepeated or EmitAllRepeated is set
+	// EmitRepeated    bool // ignored if EmitAllRepeated is set
+	// EmitAllRepeated bool
 
-	SkipFields int
-	SkipChars  int
+	// SkipFields int
+	// SkipChars  int
 
-	IgnoreCase bool
+	// IgnoreCase bool
 
 	Source io.Reader
 	Target io.Writer
