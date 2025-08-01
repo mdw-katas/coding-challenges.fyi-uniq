@@ -50,4 +50,10 @@ func TestUniqDefaults(t *testing.T) {
 		"",
 		"", // I'm not sure why this is necessary, but the builtin uniq command produces it too so I guess I'm good.
 	})
+
+	should.So(t, uniq(t, "different-at-end-input.txt"), should.Equal, []string{
+		"4",
+		"1",
+		"",
+	})
 }

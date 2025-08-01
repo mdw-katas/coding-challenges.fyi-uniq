@@ -24,7 +24,8 @@ type Configuration struct {
 
 func Uniq(config Configuration) error {
 	var previousLine bytes.Buffer
-	for reader := bufio.NewReader(config.Source); ; {
+	reader := bufio.NewReader(config.Source)
+	for {
 		line, readErr := reader.ReadBytes('\n')
 		if readErr != nil && readErr != io.EOF {
 			return fmt.Errorf("read: %w", readErr)
