@@ -13,7 +13,7 @@ import (
 	"github.com/mdw-go/testing/should"
 )
 
-func TestUniqReadError(t *testing.T) {
+func TestReadError(t *testing.T) {
 	boink := errors.New("boink")
 	config, err := ParseCLI(t.Name(), &ErringReader{err: boink}, ioutil.Discard, t.Name())
 	should.So(t, err, should.BeNil)
@@ -25,7 +25,7 @@ type ErringReader struct{ err error }
 
 func (e *ErringReader) Read(p []byte) (n int, err error) { return 0, e.err }
 
-func TestUniqWriteError(t *testing.T) {
+func TestWriteError(t *testing.T) {
 	boink := errors.New("boink")
 	config, err := ParseCLI(t.Name(), strings.NewReader("hello"), &ErringWriter{err: boink}, t.Name())
 	should.So(t, err, should.BeNil)
@@ -57,7 +57,7 @@ func process(t *testing.T, path string, args ...string) (result []string) {
 	}
 	return strings.Split(output.String(), "\n")
 }
-func TestUniqDefaults(t *testing.T) {
+func TestDefaults(t *testing.T) {
 	should.So(t, process(t, "12345-input.txt"), should.Equal, []string{
 		"1",
 		"2",
