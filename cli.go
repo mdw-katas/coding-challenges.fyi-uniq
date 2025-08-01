@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 )
 
-func ParseCLI(args []string, version string, stdin io.Reader, stdout io.Writer) (result Configuration, err error) {
+func ParseCLI(version string, stdin io.Reader, stdout io.Writer, args ...string) (result Configuration, err error) {
 	flags := flag.NewFlagSet(fmt.Sprintf("%s @ %s", filepath.Base(args[0]), version), flag.ContinueOnError)
 	flags.Usage = func() {
 		_, _ = fmt.Fprintf(flags.Output(), "Usage of %s:\n", flags.Name())

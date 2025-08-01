@@ -10,7 +10,7 @@ import (
 var Version = "dev"
 
 func main() {
-	config, err := uniq.ParseCLI(os.Args, Version, os.Stdin, os.Stdout)
+	config, err := uniq.ParseCLI(Version, os.Stdin, os.Stdout, os.Args...)
 	if err != nil {
 		log.Fatal(err)
 	}

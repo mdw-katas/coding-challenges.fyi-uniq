@@ -24,7 +24,7 @@ func (this *ParseCLISuite) AppendArgs(args ...string) {
 }
 
 func (this *ParseCLISuite) TestDefaults() {
-	config, err := ParseCLI(this.args, "version", os.Stdin, os.Stdout)
+	config, err := ParseCLI("version", os.Stdin, os.Stdout, this.args...)
 	this.So(err, should.BeNil)
 	this.So(config, should.Equal, Configuration{
 		EmitUnique: true,
