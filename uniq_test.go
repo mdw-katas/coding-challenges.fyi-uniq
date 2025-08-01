@@ -29,7 +29,7 @@ func uniq(t *testing.T, path string, args ...string) (result []string) {
 	if err != nil {
 		panic(err)
 	}
-	return strings.Split(strings.TrimSpace(output.String()), "\n")
+	return strings.Split(output.String(), "\n")
 }
 func TestUniqDefaults(t *testing.T) {
 	should.So(t, uniq(t, "12345-input.txt"), should.Equal, []string{
@@ -38,5 +38,16 @@ func TestUniqDefaults(t *testing.T) {
 		"3",
 		"4",
 		"5",
+		"",
+	})
+
+	should.So(t, uniq(t, "abc-input.txt"), should.Equal, []string{
+		"Aa bb",
+		"aa bb",
+		"",
+		"aa bb cc",
+		"AA BB cc",
+		"",
+		"", // I'm not sure why this is necessary, but the builtin uniq command produces it too so I guess I'm good.
 	})
 }

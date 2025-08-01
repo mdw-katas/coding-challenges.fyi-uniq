@@ -25,19 +25,23 @@ type Configuration struct {
 func Uniq(config Configuration) error {
 	var previousLine bytes.Buffer
 	for reader := bufio.NewReader(config.Source); ; {
-		line, err := reader.ReadBytes('\n')
-		if err == io.EOF {
+		line, readErr := reader.ReadBytes('\n')
+		if readErr != nil && readErr != io.EOF {
+			return fmt.Errorf("read: %w", readErr)
+		}
+		if len(line) == 0 && readErr == io.EOF {
 			return nil
 		}
-		if err != nil {
-			return fmt.Errorf("read: %w", err)
-		}
+		line = bytes.TrimSuffix(line, []byte{'\n'})
 		if bytes.Equal(line, previousLine.Bytes()) {
 			continue
 		}
-		_, err = config.Target.Write(line)
-		if err != nil {
-			return fmt.Errorf("write: %w", err)
+		_, writeErr := config.Target.Write(append(line, '\n'))
+		if writeErr != nil {
+			return fmt.Errorf("write: %w", writeErr)
+		}
+		if readErr == io.EOF {
+			return nil
 		}
 		previousLine.Reset()
 		_, _ = previousLine.Write(line)
