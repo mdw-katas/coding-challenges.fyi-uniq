@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -15,7 +14,7 @@ import (
 
 func TestReadError(t *testing.T) {
 	boink := errors.New("boink")
-	config, err := ParseCLI(t.Name(), &ErringReader{err: boink}, ioutil.Discard, t.Name())
+	config, err := ParseCLI(t.Name(), &ErringReader{err: boink}, io.Discard, t.Name())
 	should.So(t, err, should.BeNil)
 	err = Process(config)
 	should.So(t, err, should.WrapError, boink)
